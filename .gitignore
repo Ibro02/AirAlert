@@ -1,0 +1,78 @@
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules/
+bower_components/
+
+# Environment variables
+.env
+
+# Build and artifact directories
+dist/
+build/
+out/
+*.zip
+*.tar.gz
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pyo
+*.pyd
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# C/C++
+*.obj
+*.o
+*.exe
+*.dll
+*.so
+
+# Ruby
+*.gem
+log/
+tmp/
+vendor/bundle
+
+# PHP
+vendor/
+composer.lock
+
+# Images
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.rar
+
+# Miscellaneous
+*.swp
+*~

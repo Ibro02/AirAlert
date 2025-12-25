@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="./style.css" />
+		<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+		<title>AirAlert IoT - Monitoring Sistema</title>
+	</head>
+	<body>
+		<!-- Animated Background -->
+		<div class="background-animation">
+			<div class="blob blob-1"></div>
+			<div class="blob blob-2"></div>
+			<div class="blob blob-3"></div>
+		</div>
+
+		<!-- Sidebar -->
+		<aside class="sidebar">
+			<div class="sidebar-header">
+				<div class="logo">
+					<i class="fas fa-wind"></i>
+					<span>AirAlert</span>
+				</div>
+			</div>
+
+			<nav class="sidebar-nav">
+				<a href="#" class="nav-item active">
+					<i class="fas fa-chart-line"></i>
+					<span>Dashboard</span>
+				</a>
+				<a class="nav-item active" id="test">
+                    <button class="btn-primary">
+						Upali lampicu
+					</button>
+                </a>
+				<!-- <a href="#" class="nav-item">
+					<i class="fas fa-clock"></i>
+					<span>Historija</span>
+				</a> -->
+				<!-- <a href="#" class="nav-item">
+					<i class="fas fa-bell"></i>
+					<span>Alarmi</span>
+				</a>
+				<a href="#" class="nav-item">
+					<i class="fas fa-cog"></i>
+					<span>Postavke</span>
+				</a> -->
+			</nav>
+
+			<!-- <div class="sidebar-footer">
+				<div class="premium-card">
+					<div class="premium-icon">
+						<i class="fas fa-crown"></i>
+					</div>
+					<h4>Premium</h4>
+					<p>Nadogradite za napredniju analitiku</p>
+					<button class="btn-premium">Saznaj više</button>
+				</div>
+			</div> -->
+		</aside>
+
+		<!-- Main Content -->
+		<main class="main-content">
+			<!-- Header -->
+			<header class="top-header">
+				<div class="header-left">
+					<h1>Monitoring kvalitete zraka</h1>
+					<p class="subtitle">Praćenje u realnom vremenu</p>
+				</div>
+				<div class="header-right">
+					<div class="header-actions">
+						<!-- <button class="icon-btn" id="notificationBtn">
+							<i class="fas fa-bell"></i>
+							<span class="notification-badge">2</span>
+						</button> -->
+						<button class="icon-btn" id="openPopupBtn">
+							<i class="fas fa-sliders-h"></i>
+						</button>
+						<!-- <div class="user-profile" id="userProfileBtn">
+							<img
+								src="https://ui-avatars.com/api/?name=User&background=8b5cf6&color=fff"
+								alt="User"
+							/>
+						</div>
+					</div> -->
+				</div>
+			</header>
+
+			<!-- Alert Banner -->
+			<div class="alert-banner" id="alertBanner">
+				<div class="alert-content">
+					<i class="fas fa-triangle-exclamation"></i>
+					<div class="alert-text">
+						<strong>UPOZORENJE!</strong>
+						<p>Opasna količina ugljen monoksida (premašuje granicu)</p>
+					</div>
+				</div>
+				<button class="alert-close" id="closeAlertBanner">
+					<i class="fas fa-times"></i>
+				</button>
+			</div>
+
+			<!-- Stats Grid -->
+			<div class="stats-grid">
+				<!-- Main Reading Card -->
+				<div class="stat-card main-card">
+					<div class="card-header">
+						<div class="card-title">
+							<i class="fas fa-wind"></i>
+							<h3>Trenutna koncentracija</h3>
+						</div>
+						<div class="status-badge status-normal" id="statusBadge">
+							<span class="status-dot"></span>
+							Normalno
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="main-value">
+							<h2 id="gasConcentrationMgPerM3">--</h2>
+							<span class="unit">mg/m³</span>
+						</div>
+						<!-- <div class="value-change positive" id="valueChange">
+							<i class="fas fa-arrow-down"></i>
+							<span>2.5% niže nego prije sat vremena</span>
+						</div> -->
+					</div>
+				</div>
+
+				<!-- Secondary Stats -->
+				<div class="stat-card">
+					<div class="card-icon purple">
+						<i class="fas fa-chart-line"></i>
+					</div>
+					<div class="stat-info">
+						<p class="stat-label">Prosječno (24h)</p>
+						<h3 class="stat-value" id="avg24h">--</h3>
+						<span class="stat-unit">mg/m³</span>
+					</div>
+				</div>
+
+				<div class="stat-card">
+					<div class="card-icon green">
+						<i class="fas fa-arrow-trend-down"></i>
+					</div>
+					<div class="stat-info">
+						<p class="stat-label">Minimalno (24h)</p>
+						<h3 class="stat-value" id="min24h">--</h3>
+						<span class="stat-unit">mg/m³</span>
+					</div>
+				</div>
+
+				<div class="stat-card">
+					<div class="card-icon red">
+						<i class="fas fa-arrow-trend-up"></i>
+					</div>
+					<div class="stat-info">
+						<p class="stat-label">Maksimalno (24h)</p>
+						<h3 class="stat-value" id="max24h">--</h3>
+						<span class="stat-unit">mg/m³</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- Chart Section -->
+			<div class="chart-section">
+				<div class="chart-card">
+					<div class="chart-header">
+						<div>
+							<h3>Historija mjerenja</h3>
+							<p class="chart-subtitle">
+								Ugljen monoksid (CO) - posljednjih 30 očitanja
+							</p>
+						</div>
+						<div class="chart-controls">
+							<div class="time-selector">
+								<button class="time-btn active">1H</button>
+								<button class="time-btn">6H</button>
+								<button class="time-btn">24H</button>
+								<button class="time-btn">7D</button>
+							</div>
+						</div>
+					</div>
+					<div class="chart-container">
+						<canvas id="myChart"></canvas>
+					</div>
+				</div>
+			</div>
+
+			<!-- Recent Activity -->
+			<div class="activity-section">
+				<div class="activity-card">
+					<div class="activity-header">
+						<h3>Nedavni događaji</h3>
+						<button class="view-all">
+							Vidi sve <i class="fas fa-arrow-right"></i>
+						</button>
+					</div>
+					<div class="activity-list" id="activityList">
+						<!-- Activities will be dynamically added -->
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<!-- Settings Popup -->
+		<div id="popup" class="popup">
+			<div class="popup-overlay" id="popupOverlay"></div>
+			<div class="popup-content modern-popup">
+				<button class="popup-close" id="closePopupBtn">
+					<i class="fas fa-times"></i>
+				</button>
+
+				<div class="popup-header">
+					<i class="fas fa-sliders-h"></i>
+					<h2>Postavke alarma</h2>
+					<p>Podesite prag za aktivaciju upozorenja</p>
+				</div>
+
+				<div class="popup-body">
+					<div class="setting-group">
+						<label for="maxCO">
+							<i class="fas fa-bell"></i>
+							Aktiviraj alarm kada koncentracija dostigne
+						</label>
+						<div class="input-group">
+							<input
+								type="number"
+								id="maxCO"
+								class="modern-input"
+								placeholder="Unesite vrijednost"
+								min="0"
+								step="0.1"
+							/>
+							<span class="input-addon">mg/m³</span>
+						</div>
+						<small class="input-help">
+							<i class="fas fa-info-circle"></i>
+							Preporučena granica: 10 mg/m³
+						</small>
+					</div>
+
+					<div class="setting-group">
+						<label>
+							<i class="fas fa-volume-high"></i>
+							Tip upozorenja
+						</label>
+						<div class="toggle-group">
+							<label class="toggle-option">
+								<input type="checkbox" id="soundAlertToggle" checked />
+								<span class="toggle-label">
+									<i class="fas fa-bell"></i>
+									Zvučno upozorenje
+								</span>
+							</label>
+							<label class="toggle-option">
+								<input type="checkbox" id="emailAlertToggle" disabled unchecked />
+								<span class="toggle-label">
+									<i class="fas fa-envelope"></i>
+									Email notifikacija
+								</span>
+							</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="popup-footer">
+					<button class="btn-secondary" id="cancelBtn">Otkaži</button>
+					<button class="btn-primary" id="saveButton">
+						<i class="fas fa-check"></i>
+						Spremi postavke
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Alert Popup -->
+		<div id="popup2" class="popup">
+			<div class="popup-overlay" id="popup2Overlay"></div>
+			<div class="popup-content alert-popup">
+				<div class="alert-popup-icon">
+					<i class="fas fa-triangle-exclamation"></i>
+				</div>
+
+				<h2>ALARM AKTIVIRAN!</h2>
+				<p>
+					Hitno obavještavam da je alarm aktiviran zbog opasne razine plina u
+					prostoriji.
+				</p>
+
+				<div class="alert-actions">
+					<button class="btn-danger" id="turnOffAlarm">
+						<i class="fas fa-wind"></i>
+						Provjetri i ugasi alarm
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Profile Popup -->
+		<div id="profilePopup" class="popup">
+			<div class="popup-overlay" id="profilePopupOverlay"></div>
+			<div class="popup-content modern-popup">
+				<button class="popup-close" id="closeProfilePopupBtn">
+					<i class="fas fa-times"></i>
+				</button>
+
+				<div class="popup-header">
+					<i class="fas fa-user-circle"></i>
+					<h2>Korisnički profil</h2>
+					<p>Podesite svoje informacije za notifikacije</p>
+				</div>
+
+				<div class="popup-body">
+					<div class="setting-group">
+						<label for="userEmail">
+							<i class="fas fa-envelope"></i>
+							Email adresa za upozorenja
+						</label>
+						<div class="input-group">
+							<input
+								type="email"
+								id="userEmail"
+								class="modern-input"
+								placeholder="vas.email@primjer.com"
+							/>
+						</div>
+						<small class="input-help">
+							<i class="fas fa-info-circle"></i>
+							Na ovu adresu ćete primati upozorenja o nivou CO
+						</small>
+					</div>
+
+					<div class="setting-group">
+						<label for="userName">
+							<i class="fas fa-user"></i>
+							Vaše ime (opcionalno)
+						</label>
+						<div class="input-group">
+							<input
+								type="text"
+								id="userName"
+								class="modern-input"
+								placeholder="Unesite ime"
+							/>
+						</div>
+					</div>
+
+					<div class="email-status" id="emailStatus">
+						<i class="fas fa-check-circle"></i>
+						<span>Email notifikacije su aktivne</span>
+					</div>
+				</div>
+
+				<div class="popup-footer">
+					<button class="btn-secondary" id="cancelProfileBtn">Otkaži</button>
+					<button class="btn-primary" id="saveProfileButton">
+						<i class="fas fa-check"></i>
+						Spremi profil
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-database.js"></script>
+		<script type="module" src="./app.js"></script>
+	</body>
+</html>
