@@ -636,12 +636,12 @@ function setupTimeSelector() {
 	});
 }
 
-var test = document.getElementById("test");
-var testValue = false;
-test.addEventListener("click", () => {
-	database.ref("test").set(!testValue);
-	testValue = !testValue;
-});
+// var test = document.getElementById("test");
+// var testValue = false;
+// test.addEventListener("click", () => {
+// 	database.ref("test").set(!testValue);
+// 	testValue = !testValue;
+// });
 
 // Initialize everything
 document.addEventListener("DOMContentLoaded", () => {
